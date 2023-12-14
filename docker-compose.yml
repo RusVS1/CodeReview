@@ -1,12 +1,25 @@
 version: '3'
-services:
-  web:
-    container_name: bot
-    build: .
-    restart: on-failure
-    ports:
-      - "8000:8000"
 
-  ubuntu:
-    container_name: ubuntu_container
-    image: "ubuntu"
+services:
+  myapp:
+    build: .
+    container_name: my_app_container
+    restart: always
+    ports:
+      - "8000:8000"  
+
+    depends_on:
+      - selenium
+      - postgres
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium_container
+    ports:
+      - "4444:4444"  
+
+  postgres:
+    image: postgres
+    container_name: postgres_container
+    ports:
+      - "5432:5432"  

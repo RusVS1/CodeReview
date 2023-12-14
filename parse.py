@@ -27,9 +27,11 @@ def get_frame_name(frame):
     return frame
 
 def find_prices(frame):
-    options = Options()
-    options.add_argument('--headless=new')
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Добавьте этот аргумент, если возникают проблемы с shared memory
+    chrome_options.add_argument("--no-sandbox")  # И этот аргумент для безопасности
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     items = ["_prime_set","_prime_blueprint","_prime_neuroptics_blueprint","_prime_systems_blueprint","_prime_chassis_blueprint"]
     prices = []
     for item in items:
@@ -37,6 +39,3 @@ def find_prices(frame):
         driver.get(url)
         prices.append(int(driver.find_element(By.CLASS_NAME, "price").text))
     update_database(frame, prices)
-
-
-

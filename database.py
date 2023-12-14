@@ -27,4 +27,3 @@ def get_prices(frame_name):
     prices = cursor.fetchone()
     connection.close()
     return prices
-

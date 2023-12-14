@@ -62,7 +62,7 @@ def handle_messages(message):
     frame = message.text
     frame = get_frame_name(frame)
     if frame != "frame_missing":
-        bot.send_message(message.chat.id, "Ищу цены...")
+        bot.send_message(message.chat.id, "Ищу цены(1-2 мин.)...")
         find_prices(frame)
         name, sets, bluep, neuro, systm, chas = get_prices(frame)
         bot.send_message(message.chat.id, f"""Варианты покупки:
@@ -76,4 +76,5 @@ def handle_messages(message):
     else:
         bot.send_message(message.chat.id, "Такого варфрейма нет! Попробуй еще раз.")
 
-bot.polling(none_stop=True)
+def run_bot():
+    bot.polling(none_stop=True)
