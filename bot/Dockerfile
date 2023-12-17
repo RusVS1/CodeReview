@@ -21,5 +21,6 @@ COPY parse.py ./
 RUN pip install selenium
 RUN pip install webdriver-manager
 RUN pip install pyTelegramBotAPI
+RUN pip install psycopg2-binary
 
 CMD ["python", "main.py"]

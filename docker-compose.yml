@@ -1,25 +1,41 @@
 version: '3'
 
 services:
-  myapp:
-    build: .
-    container_name: my_app_container
+  bot:
+    build: bot/
     restart: always
-    ports:
-      - "8000:8000"  
-
+    expose:
+      - "8000"
     depends_on:
       - selenium
-      - postgres
+      - db
+    networks:
+      - my_network 
 
   selenium:
     image: selenium/standalone-chrome
     container_name: selenium_container
     ports:
-      - "4444:4444"  
+      - "4444:4444"
+    networks:
+      - my_network  
 
-  postgres:
+  db:
+    container_name: postgres_database
     image: postgres
-    container_name: postgres_container
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: frames
     ports:
-      - "5432:5432"  
+      - 8000:8000
+    expose:
+      - "8000"
+    volumes:
+      - /DataBase:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - my_network 
+
+networks:
+  my_network: 
